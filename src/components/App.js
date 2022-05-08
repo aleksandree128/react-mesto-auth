@@ -52,10 +52,6 @@ function App() {
             });
     }, []);
 
-    React.useEffect(() => {
-        verifyToken();
-    })
-
     function handleEditAvatarClick() {
         setEditAvatarPopup(true);
     }
@@ -76,7 +72,7 @@ function App() {
         setEditAvatarPopup(false);
         setEditProfilePopup(false);
         setAddImagePopup(false);
-        setSelectCard(false);
+        setSelectCard({});
         setInfoTooltipOpen(false);
     }
 
@@ -137,7 +133,9 @@ function App() {
             setCards((cards)=>cards.filter(function (i) {
                 return i._id !== card._id;
             }))
-        });
+        })
+            .catch((err) => console.log(`Ошибка: ${err}`));
+
     }
 
     function registering(email, password) {
@@ -146,7 +144,7 @@ function App() {
                 setInfoTooltipOpen(true);
                 if(res) {
                     setMessage(true);
-                    history.push('/sign-in');
+                    history.push('/sign-up');
                 }
             })
             .catch(() => {
@@ -159,10 +157,10 @@ function App() {
         authorization(password, email)
             .then((res) => {
                 if(res) {
+                    localStorage.setItem('jwt', res.token);
                     setLoggedIn(true);
                     setUserEmail(email);
-                    history.push('/sign-un');
-                    localStorage.setItem('jwt', res.token);
+                    history.push('/');
                 }
             })
             .catch(() => {
@@ -170,23 +168,23 @@ function App() {
                 setInfoTooltipOpen(true);
             });
     }
-
-    function verifyToken() {
+    React.useEffect(()=> {
         const token = localStorage.getItem('jwt');
-        if(token) {
+        if (token) {
             validityToken(token)
                 .then((res) => {
-                    if(res) {
+                    if (res) {
                         setUserEmail(res.data.email)
+                        setLoggedIn(true);
+                        history.push('/');
                     }
-                    setLoggedIn(true);
-                    history.push('/');
                 })
                 .catch((err) => {
                     console.log(err);
+                    localStorage.removeItem('token');
                 });
         }
-    }
+    },[history])
 
     function ExitProfile() {
         localStorage.removeItem('jwt');

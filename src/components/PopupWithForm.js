@@ -12,6 +12,7 @@ function PopupWithForm(props) {
     }
 
     React.useEffect(() => {
+        if (!props.isOpen) return;
         function handleEscClose(evt) {
             if (evt.key === "Escape") {
                 props.onClose();
@@ -21,7 +22,7 @@ function PopupWithForm(props) {
         return () => {
             document.removeEventListener("keydown", handleEscClose);
         };
-    });
+    },[props.isOpen]);
 
     return (
         <section

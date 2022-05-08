@@ -38,7 +38,7 @@ export const authorization = (password, email) => {
 }
 
 export const validityToken = (token) => {
-    return fetch(`${url}/user/me`, {
+    return fetch(`${url}/users/me`, {
         method: 'GET',
         headers: {
             "Content-Type": "application/json",
