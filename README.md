@@ -41,6 +41,6 @@ ALT-H3
 6. react
 
 #### H4  Необходимо добавить react для полной функциональности сайта  
-ссылка на сайт:https://aleksandree128.github.io/mesto/
+ссылка на сайт:https://aleksandree128.github.io/react-mesto-auth/
 
 # mesto-react
