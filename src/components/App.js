@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "../pages/index.css";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -30,27 +30,28 @@ function App() {
     const [userEmail, setUserEmail] = React.useState('');
 
     const history = useHistory();
-    React.useEffect(() => {
-        api
-            .getProfile()
-            .then((data) => {
-                setCurrentUser(data);
-            })
-            .catch((err) => {
-                console.log(`Ошибка сервера ${err}`);
-            });
-    }, []);
 
-    React.useEffect(() => {
-        api
-            .getInitialCards()
-            .then((data) => {
-                setCards(data);
-            })
-            .catch((err) => {
-                console.log(`Ошибка сервера ${err}`);
-            });
-    }, []);
+    React.useEffect(()=> {
+        const token = localStorage.getItem('jwt');
+        if (token) {
+            validityToken(token)
+                .then((res) => {
+                    if (res) {
+                        setLoggedIn(true);
+                        setUserEmail(res.data.email)
+                    }
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
+    },[])
+
+    useEffect(()=>{
+        if(loggedIn===true){
+            history.push('/');
+        }
+    },[loggedIn, history])
 
     function handleEditAvatarClick() {
         setEditAvatarPopup(true);
@@ -168,23 +169,28 @@ function App() {
                 setInfoTooltipOpen(true);
             });
     }
-    React.useEffect(()=> {
-        const token = localStorage.getItem('jwt');
-        if (token) {
-            validityToken(token)
-                .then((res) => {
-                    if (res) {
-                        setUserEmail(res.data.email)
-                        setLoggedIn(true);
-                        history.push('/');
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    localStorage.removeItem('token');
-                });
-        }
-    },[history])
+
+    React.useEffect(() => {
+        api
+            .getProfile()
+            .then((data) => {
+                setCurrentUser(data);
+            })
+            .catch((err) => {
+                console.log(`Ошибка сервера ${err}`);
+            });
+    }, []);
+
+    React.useEffect(() => {
+        api
+            .getInitialCards()
+            .then((data) => {
+                setCards(data);
+            })
+            .catch((err) => {
+                console.log(`Ошибка сервера ${err}`);
+            });
+    }, []);
 
     function ExitProfile() {
         localStorage.removeItem('jwt');
