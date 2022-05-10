@@ -171,26 +171,31 @@ function App() {
     }
 
     React.useEffect(() => {
-        api
-            .getProfile()
-            .then((data) => {
-                setCurrentUser(data);
-            })
-            .catch((err) => {
-                console.log(`Ошибка сервера ${err}`);
-            });
-    }, []);
+        if(loggedIn){
+            api
+                .getProfile()
+                .then((data) => {
+                    setCurrentUser(data);
+                })
+                .catch((err) => {
+                    console.log(`Ошибка сервера ${err}`);
+                });
+        }
+
+    }, [loggedIn]);
 
     React.useEffect(() => {
-        api
-            .getInitialCards()
-            .then((data) => {
-                setCards(data);
-            })
-            .catch((err) => {
-                console.log(`Ошибка сервера ${err}`);
-            });
-    }, []);
+        if(loggedIn){
+            api
+                .getInitialCards()
+                .then((data) => {
+                    setCards(data);
+                })
+                .catch((err) => {
+                    console.log(`Ошибка сервера ${err}`);
+                });
+        }
+    }, [loggedIn]);
 
     function ExitProfile() {
         localStorage.removeItem('jwt');
