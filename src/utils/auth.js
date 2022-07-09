@@ -1,5 +1,5 @@
 
-export const url = 'https://auth.nomoreparties.co';
+export const url = 'http://localhost:3000';
 
 function getResponse(res) {
     if(res.ok) {

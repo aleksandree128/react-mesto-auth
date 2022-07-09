@@ -145,7 +145,7 @@ function App() {
                 setInfoTooltipOpen(true);
                 if(res) {
                     setMessage(true);
-                    history.push('/sign-up');
+                    history.push('/signup');
                 }
             })
             .catch(() => {
@@ -199,7 +199,7 @@ function App() {
 
     function ExitProfile() {
         localStorage.removeItem('jwt');
-        history.push('/sign-in');
+        history.push('/signin');
         setLoggedIn(false);
     }
 
@@ -229,12 +229,12 @@ function App() {
                             exact path="/"
                             loggedIn={loggedIn}
                         />
-                        <Route path="/sign-in">
+                        <Route path="/signin">
                             <Login
                                 onLogin={login}
                             />
                         </Route>
-                        <Route path="/sign-up">
+                        <Route path="/signup">
                             <Register
                                 onRegister={registering}
                             />

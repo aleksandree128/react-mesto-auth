@@ -1,3 +1,5 @@
+const BASE_URL = 'http://localhost:3000'
+
 class Api {
     constructor({ baseUrl, headers }) {
         this._headers = headers;
@@ -93,9 +95,8 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: "https://mesto.nomoreparties.co/v1/cohort-37",
+    baseUrl: BASE_URL,
     headers: {
-        authorization: "09b0089e-e02a-4b71-a1dc-982ec8809360",
         "Content-Type": "application/json",
     },
 });
