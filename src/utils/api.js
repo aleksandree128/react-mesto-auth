@@ -97,6 +97,7 @@ class Api {
 const api = new Api({
     baseUrl: BASE_URL,
     headers: {
+        authorization: `Bearer ${localStorage.getItem('JWT')}`,
         "Content-Type": "application/json",
     },
 });
