@@ -1,4 +1,4 @@
-const BASE_URL = 'https://api.domainname.students.nomorepartiesxyz.ru'
+import {apiUrl} from "./const";
 
 class Api {
     constructor({ baseUrl, headers }) {
@@ -94,12 +94,6 @@ class Api {
     }
 }
 
-const api = new Api({
-    baseUrl: BASE_URL,
-    headers: {
-        authorization: `Bearer ${localStorage.getItem('JWT')}`,
-        "Content-Type": "application/json",
-    },
-});
+const api = new Api(apiUrl);
 
 export default api
