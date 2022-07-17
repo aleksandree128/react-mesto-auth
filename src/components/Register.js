@@ -1,37 +1,42 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {Link} from "react-router-dom"
 
+function Register(props) {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-const Register = ({onRegister}) => {
+  function signUp(e) {
+    e.preventDefault();
+    props.handleRegister(email, password)
+  }
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+  function handleChangeEmail(e) {
+    setEmail(e.target.value);
+  }
 
-    function handleEmail(evt) {
-        setEmail(evt.target.value);
-    }
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
+  }
 
-    function handlePassword(evt) {
-        setPassword(evt.target.value);
-    }
-
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        onRegister(email, password);
-    }
-
-    return(
-        <form className="login-form" onSubmit={handleSubmit}>
-            <h3 className="login-form__title">Регистрация</h3>
-            <input className="login-form__input login-form__input_login-email" type="email" onChange={handleEmail} placeholder="Email" required />
-            <input className="login-form__input login-form__input_login-pass"  type="password" onChange={handlePassword} placeholder="Пароль" required/>
-            <button className="login-form__button" type="submit">Зарегистрироваться</button>
-            <div className="login-form__container">
-                <p className="login-form__text">Уже зарегистрированы?</p>
-                <Link to="/sign-in" className="login-form__link">Войти</Link>
-            </div>
-        </form>
-    )
+  return (
+    <div className="register">
+      <form onSubmit={signUp} id="form__input" name="profileInputForm" className="popup__form" >
+        <h2 className="popup__title title">Регистрация</h2>
+        <input onChange={handleChangeEmail} placeholder="Email" id="name"
+               name="input-name" type="text"
+               className="popup__input popup__input_type_name input" minLength={2} maxLength={40} required/>
+        <span id="error-name" className="error-message error-message_visible"/>
+        <input onChange={handleChangePassword} placeholder="Пароль" id="password"
+               name="input-password" type='password'
+               className="popup__input popup__input_type_job input" minLength={2} maxLength={200} required/>
+        <span id="error-password" className="error-message error-message_visible"/>
+        <button className="popup__button-save button" type="submit">Зарегистрироваться</button>
+        <Link className='register__login' to="/sign-in">Уже зарегистрированы? Войти</Link>
+      </form>
+    </div>
+  );
 }
 
 export default Register;
+
+

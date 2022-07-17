@@ -1,33 +1,38 @@
-import React from 'react';
+import React from "react";
 
-function Login({onLogin}) {
+function Login(props) {
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+  function signIn(e) {
+    e.preventDefault();
+    props.handleLogin(email, password)
+  }
 
-    function handleEmail(evt) {
-        setEmail(evt.target.value);
-    }
+  function handleChangeEmail(e) {
+    setEmail(e.target.value);
+  }
 
-    function handlePassword(evt) {
-        setPassword(evt.target.value);
-    }
+  function handleChangePassword(e) {
+    setPassword(e.target.value);
+  }
 
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        onLogin(email, password);
-    }
-
-    return (
-        <form className="login-form" onSubmit={handleSubmit}>
-            <h3 className="login-form__title">Вход</h3>
-            <input className="login-form__input login-form__input_login-email" placeholder="Email"
-                   type="email" onChange={handleEmail} required />
-            <input className="login-form__input login-form__input_login-pass" placeholder="Пароль"
-                   type="password" onChange={handlePassword} required />
-            <button className="login-form__button" type="submit">Войти</button>
-        </form>
-    )
+  return (
+    <div className="register">
+      <form onSubmit={signIn} id="form__input" name="loginForm" className="popup__form" >
+        <h2 className="popup__title title">Вход</h2>
+        <input onChange={handleChangeEmail} placeholder="Email" id="email"
+               name="input-email" type="text"
+               className="popup__input popup__input_type_name input" minLength={2} maxLength={40} required/>
+        <span id="error-email" className="error-message error-message_visible"/>
+        <input onChange={handleChangePassword} placeholder="Пароль" id="password" type='password'
+               name="input-password"
+               className="popup__input popup__input_type_job input" minLength={2} maxLength={200} required/>
+        <span id="error-password" className="error-message error-message_visible"/>
+        <button className="popup__button-save button" type="submit">Войти</button>
+      </form>
+    </div>
+  );
 }
 
 export default Login;

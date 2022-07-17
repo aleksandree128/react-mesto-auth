@@ -1,4 +1,3 @@
-import {apiUrl} from "./const";
 
 function getResponse(res) {
     if(res.ok) {
@@ -8,7 +7,7 @@ function getResponse(res) {
 }
 
 export const register = (password, email) => {
-    return fetch(`${apiUrl.baseUrl}/signup`, {
+    return fetch(`${auth.baseUrl}/signup`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -23,7 +22,7 @@ export const register = (password, email) => {
 };
 
 export const authorization = (password, email) => {
-    return fetch(`${apiUrl.baseUrl}/signin`, {
+    return fetch(`${auth.baseUrl}/signin`, {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -37,12 +36,19 @@ export const authorization = (password, email) => {
 }
 
 export const validityToken = (token) => {
-    return fetch(`${apiUrl.baseUrl}/users/me`, {
+    return fetch(`${auth.baseUrl}/users/me`, {
         method: 'GET',
-        headers: {authorization: 'Bearer ' + localStorage.getItem('jwt'), ...apiUrl.headers},
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${token}`
+        },
     })
         .then((res) => {
             return getResponse(res)
         })
 }
+
+export const auth = new auth({
+    baseUrl: 'https://mesto-korshinov.nomoredomains.xyz',
+});
 

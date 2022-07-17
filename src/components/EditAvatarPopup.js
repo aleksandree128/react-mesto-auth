@@ -1,45 +1,41 @@
-import React from "react";
+import React from 'react';
 import PopupWithForm from "./PopupWithForm";
+import {currentUserContext} from "../context/CurrentUserContext";
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
-    const avatarRef = React.useRef();
+function EditAvatarPopup(props) {
+  const [avatar, setAvatar] = React.useState('');
+  const currentUser = React.useContext(currentUserContext)
 
-    React.useEffect(() => {
-        avatarRef.current.value = "";
-    }, [isOpen]);
+  React.useEffect(() => {
+    setAvatar('')
+  }, [currentUser]);
 
-    function handleSubmit(e) {
-        e.preventDefault();
-        onUpdateAvatar({
-            avatar: avatarRef.current.value,
-        });
-    }
+  function handleChangeAvatar(e) {
+    setAvatar(e.target.value);
+  }
 
-    return (
-        <PopupWithForm
-            title="Обновить аватар"
-            name="update-avatar"
-            popup="avatar-form"
-            isOpen={isOpen}
-            onClose={onClose}
-            buttonText={"Создать"}
-            onSubmit={handleSubmit}
-        >
-            <input
-                id="avatar"
-                type="url"
-                ref={avatarRef}
-                className="popup__item popup__item_type_avatar-link"
-                name="link"
-                placeholder="Ссылка на картинку"
-                required
-            />
-            <span
-                id="error-avatar"
-                className="popup__input-error popup__input-error_visible"
-            ></span>
-        </PopupWithForm>
+  function handleSubmit(e) {
+    // Запрещаем браузеру переходить по адресу формы
+    e.preventDefault();
+    // Передаём значения управляемых компонентов во внешний обработчик
+    props.onUpdateUser(
+      avatar
     );
+  }
+
+  return (
+    <PopupWithForm className="Avatar" name='avatar' isOpen={props.isOpen} onClose={props.onClose}
+                   onSubmit={handleSubmit}
+                   buttonText="Coxранить">
+      <form name="profileInputForm" className="popup__form" onSubmit={handleSubmit}>
+        <h2 className="popup__title">Обновить аватар</h2>
+        <input onChange={handleChangeAvatar} value={avatar} id="avatar" name="input-link" type="url"
+               className="popup__input popup__input_card-link"
+               placeholder="Ссылка на картинку" required/>
+        <span id="error-avatar" className="error-message error-message_visible"/>
+      </form>
+    </PopupWithForm>
+  );
 }
 
 export default EditAvatarPopup;

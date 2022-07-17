@@ -6,10 +6,15 @@
   justify-content: center;
   flex-direction: column;
   position: relative;
+
 }
 
-@media screen and (min-width: 320px) and (max-width: 768px) {
+
+@media screen and (max-width: 920px) {
+
   .popup__container-image {
+
     max-width: 282px;
+
   }
 }
