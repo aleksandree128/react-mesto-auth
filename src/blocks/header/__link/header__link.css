@@ -1,7 +1,15 @@
 .header__link {
-    color: white;
-    max-height: 25px;
-    margin-top: 10px;
-    text-decoration: none;
+    font-weight: 400;
     font-size: 18px;
+    line-height: 22px;
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+@media (max-width: 767px) {
+    .header__link {
+        font-size: 14px;
+        line-height: 17px;
+        padding-right: 27px;
+    }
 }

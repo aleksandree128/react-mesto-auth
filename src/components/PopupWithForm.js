@@ -1,50 +1,18 @@
-import React from "react";
-
-function PopupWithForm(props) {
-    const popupOpened = props.isOpen ? "popup_opened" : "";
-    function close(evt) {
-        if (evt.target.classList.contains("popup_opened")) {
-            props.onClose();
-        }
-        if (evt.target.classList.contains("popup__close")) {
-            props.onClose();
-        }
-    }
-
-    React.useEffect(() => {
-        if (!props.isOpen) return;
-        function handleEscClose(evt) {
-            if (evt.key === "Escape") {
-                props.onClose();
-            }
-        }
-        document.addEventListener("keydown", handleEscClose);
-        return () => {
-            document.removeEventListener("keydown", handleEscClose);
-        };
-    },[props.isOpen]);
-
+export default function PopupWithForm({ title, name, isOpen, children, btnText, loadingButtonText, onClose, onSubmit, isLoadingData }) {
+    const openedClass = isOpen && 'popup_opened'
     return (
-        <section
-            className={`popup popup_type_${props.name} ${popupOpened}`}
-            onMouseDown={close}
-        >
+        <section className={`popup popup_${name} ${openedClass}`}  >
             <div className="popup__container">
-                <button type="button" className="popup__close"></button>
-                <h3 className="popup__title">{props.title}</h3>
-                <form
-                    className="popup__name"
-                    name={props.name}
-                    onSubmit={props.onSubmit}
-                >
-                    {props.children}
-                    <button className="popup__save" type="submit">
-                        {props.buttonText}
-                    </button>
-                </form>
-                <button className="popup__close" type="button"></button>
+                <button onClick={onClose} className="popup__close-button" type="button" aria-label="Выйти"></button>
+                <div className="popup__form">
+                    <h2 className="popup__title">{title}</h2>
+                    <form className={`popup__forms popup__form-${name}`} name={name} onSubmit={onSubmit} noValidate>
+                        {children}
+                        <button className="popup__submit-button " type="submit">{isLoadingData ? loadingButtonText : btnText}</button>
+                    </form>
+                </div>
             </div>
         </section>
-    );
+    )
 }
-export default PopupWithForm;
+

@@ -1,11 +1,7 @@
-import React from "react";
-
-const Footer = () => {
+export default function Footer() {
     return (
         <footer className="footer">
-            <p className="footer__text">&#169; Коршинов Александр 2021</p>
+            <p className="footer__copyleft">&copy;2022 Mesto Russia</p>
         </footer>
-    );
-};
-
-export default Footer;
+    )
+}

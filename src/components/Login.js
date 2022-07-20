@@ -1,33 +1,47 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-function Login({onLogin}) {
+function Login(props) {
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    function handleEmail(evt) {
-        setEmail(evt.target.value);
+    function handleEmailChange(e) {
+        setEmail(e.target.value)
     }
 
-    function handlePassword(evt) {
-        setPassword(evt.target.value);
+    function handlePasswordChange(e) {
+        setPassword(e.target.value)
     }
 
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        onLogin(email, password);
+    function handleSigninSubmit(e) {
+        e.preventDefault();
+        props.handleLogin(email, password);
     }
 
     return (
-        <form className="login-form" onSubmit={handleSubmit}>
-            <h3 className="login-form__title">Вход</h3>
-            <input className="login-form__input login-form__input_login-email" placeholder="Email"
-                   type="email" onChange={handleEmail} required />
-            <input className="login-form__input login-form__input_login-pass" placeholder="Пароль"
-                   type="password" onChange={handlePassword} required />
-            <button className="login-form__button" type="submit">Войти</button>
-        </form>
+        <section className="auth">
+            <h2 className="auth__title">Вход</h2>
+            <form className="auth__form" onSubmit={handleSigninSubmit}>
+                <input
+                    type="email"
+                    onChange={handleEmailChange}
+                    className="auth__input"
+                    placeholder="Email"
+                    value={email}
+                    required
+                />
+                <input
+                    type="password"
+                    onChange={handlePasswordChange}
+                    className="auth__input"
+                    placeholder="Пароль"
+                    value={password}
+                    required
+                />
+                <button type="submit" className="auth__submit">Войти</button>
+            </form>
+        </section>
     )
 }
-
-export default Login;
+export default withRouter(Login);

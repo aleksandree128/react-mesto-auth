@@ -1,37 +1,59 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from "react-router-dom";
 
+function Register(props) {
 
-const Register = ({onRegister}) => {
+    const [email, setEmail] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-
-    function handleEmail(evt) {
-        setEmail(evt.target.value);
+    function handleChangeEmail(e) {
+        setEmail(e.target.value);
     }
 
-    function handlePassword(evt) {
-        setPassword(evt.target.value);
+    function handleChangePassword(e) {
+        setPassword(e.target.value);
     }
 
-    function handleSubmit(evt) {
-        evt.preventDefault();
-        onRegister(email, password);
+    function handleSubmit(e) {
+        e.preventDefault();
+        props.onRegistration(email, password);
     }
 
-    return(
-        <form className="login-form" onSubmit={handleSubmit}>
-            <h3 className="login-form__title">Регистрация</h3>
-            <input className="login-form__input login-form__input_login-email" type="email" onChange={handleEmail} placeholder="Email" required />
-            <input className="login-form__input login-form__input_login-pass"  type="password" onChange={handlePassword} placeholder="Пароль" required/>
-            <button className="login-form__button" type="submit">Зарегистрироваться</button>
-            <div className="login-form__container">
-                <p className="login-form__text">Уже зарегистрированы?</p>
-                <Link to="/sign-in" className="login-form__link">Войти</Link>
-            </div>
-        </form>
+    return (
+        <section className="auth">
+            <h2 className="auth__title">Регистрация</h2>
+            <form className="auth__form" onSubmit={handleSubmit}>
+                <input
+                    className="auth__input"
+                    placeholder="Email"
+                    name="email"
+                    type="email"
+                    value={email}
+                    onChange={handleChangeEmail}
+                    required
+                />
+                <input
+                    className="auth__input"
+                    placeholder="Пароль"
+                    name="password"
+                    type="password"
+                    value={password}
+                    onChange={handleChangePassword}
+                    required
+                    minLength="8"
+                    maxLength="16"
+                />
+                <button
+                    className="auth__submit"
+                    type="submit"
+                >
+                    Регистрация
+                </button>
+                <p className="auth__caption">Уже зарегистрированы? <Link className="auth__caption auth__link" to="/sign-in">Войти</Link></p>
+            </form>
+        </section>
     )
+
 }
 
-export default Register;
+export default withRouter(Register)

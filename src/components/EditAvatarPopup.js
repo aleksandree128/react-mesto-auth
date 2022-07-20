@@ -1,13 +1,11 @@
-import React from "react";
-import PopupWithForm from "./PopupWithForm";
+import PopupWithForm from './PopupWithForm';
+import React from 'react';
 
-function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar, isLoadingData }) {
+
     const avatarRef = React.useRef();
 
-    React.useEffect(() => {
-        avatarRef.current.value = "";
-    }, [isOpen]);
-
+    //обработчик сабмита формы (обновление аватарки)
     function handleSubmit(e) {
         e.preventDefault();
         onUpdateAvatar({
@@ -15,31 +13,24 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         });
     }
 
+    //очистка поля для ввода url аватара
+    React.useEffect(() => { avatarRef.current.value = '' }, [isOpen])
+
     return (
         <PopupWithForm
-            title="Обновить аватар"
-            name="update-avatar"
-            popup="avatar-form"
+            name='avatar'
+            title='Обновить аватар'
             isOpen={isOpen}
             onClose={onClose}
-            buttonText={"Создать"}
             onSubmit={handleSubmit}
+            btnText="Сохранить"
+            loadingButtonText="Сохранение..."
+            isLoadingData={isLoadingData}
         >
-            <input
-                id="avatar"
-                type="url"
-                ref={avatarRef}
-                className="popup__item popup__item_type_avatar-link"
-                name="link"
-                placeholder="Ссылка на картинку"
-                required
-            />
-            <span
-                id="error-avatar"
-                className="popup__input-error popup__input-error_visible"
-            ></span>
+            <input className="popup__item popup__item-avatar" name="avatar" id="input-link" ref={avatarRef} type="url" placeholder="Ссылка на аватарку" required />
+            <span className="input-link-error popup__input-error"></span>
         </PopupWithForm>
-    );
+    )
 }
 
 export default EditAvatarPopup;

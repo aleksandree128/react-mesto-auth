@@ -1,19 +1,19 @@
-import React from 'react';
-import sucsesfull from '../images/sucsefull.svg';
-import unsucsesfull from '../images/unsucsefull.svg';
+import success from '../images/success.svg';
+import error from '../images/error.svg';
 
-function InfoTooltip(props) {
-
+function InfoTooltip({ isOpen, onClose, status }) {
+    const openedClass = isOpen && 'popup_opened'
     return (
-        <div className={`popup popup_type_open ${props.isOpen ? 'popup_opened' : ''}`}>
-            <div className="infoTooltip">
-                <img className="infoTooltip__image" src={props.status ? sucsesfull : unsucsesfull} />
-                <p className="infoTooltip__text">
-                    {props.status ? "Вы успешно зарегистрировались!" : "Что-то пошло не так! Попробуйте ещё раз."}
+        <section className={`popup ${openedClass}`}>
+            <div className="popup__window">
+                <button onClick={onClose} className="popup__close-button" type="button" aria-label="Выйти"></button>
+                <img className="popup__info-image" src={status ? success : error} alt={status ? "Успешно" : "Ошибка"} />
+                <p className="popup__info-text">{status
+                    ? "Вы успешно зарегистрировались!"
+                    : "Что-то пошло не так! Попробуйте ещё раз."}
                 </p>
-                <button type="button" className="popup__close" onClick={props.onClose} />
             </div>
-        </div>
+        </section>
     )
 }
 

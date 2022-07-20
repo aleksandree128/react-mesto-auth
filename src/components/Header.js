@@ -1,38 +1,35 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import logoHeader from "../images/header/header__logo.svg";
+import headerLogo from '../images/header-logo.svg';
+import { Link, useLocation } from 'react-router-dom';
+import settingsButton from "../images/header_settings.svg";
 
-function Header({ userEmailOnHeader, logoutProfile }) {
-    const location = useLocation();
+export default function Header(props) {
+    const { pathname } = useLocation();
+    const linkText = `${pathname === '/sign-in' ? 'Регистрация' : 'Войти'}`;
+    const linkRoute = `${pathname === '/sign-in' ? '/sign-up' : '/sign-in'}`;
+
     return (
         <header className="header">
-            <a href="#" target="_blank">
-                <img className="logo" src={logoHeader} alt="логотип" />
-            </a>
-            <div className="header__links">
-                <p className="header__link header__link_email">
-                    {location.pathname === "/" ? userEmailOnHeader : ""}
-                </p>
-                <Link
-                    to={
-                        location.pathname === "/signup"
-                            ? "/signin"
-                            : location.pathname === "/signin"
-                                ? "/signup"
-                                : "/signin"
-                    }
-                    className="header__link header__link_exit"
-                    onClick={location.pathname === "/" ? logoutProfile : () => {}}
-                >
-                    {location.pathname === "/signup"
-                        ? "Войти"
-                        : location.pathname === "/signin"
-                            ? "Регистрация"
-                            : "Выйти"}
-                </Link>
+            <img className="header__logo" src={headerLogo} alt="Логотип Место" />
+            <div>
+                {props.loggedIn ?
+                    (<div className="header__wrap">
+                        <p className="header__email">{props.email}</p>
+                        <Link className="header__sign-out" to="" onClick={props.onLogOut}>Выйти</Link>
+                    </div>) : (<Link to={linkRoute} className="header__link">{linkText}</Link>)
+                }
             </div>
+            {props.loggedIn ? (
+                <img
+                    onClick={props.onSettings}
+                    src={settingsButton}
+                    className="header__menu-settings"
+                    alt='настройки'
+                />
+            ) : (
+                ""
+            )}
+
+
         </header>
     );
 }
-
-export default Header;
