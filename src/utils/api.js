@@ -109,7 +109,7 @@ class Api {
 }
 
 const api = new Api({
-    baseUrl: 'https://mesto-korshinov.nomoredomains.xyz',
+    baseUrl: 'https://api.domainname.students.nomorepartiesxyz.ru',
     headers: {
         "Content-Type": "application/json",
     },
