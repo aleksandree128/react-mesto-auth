@@ -1,33 +1,38 @@
-import Vector_logo from '../images/Vector_logo.svg';
-import React from 'react';
-import {Link,Switch,Route} from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import logoHeader from "../images/header/header__logo.svg";
 
-function Header(props) {
-
-  function logOut() {
-    if (!props.link)
-      if (props.onClick)
-        props.onClick()
-  }
-  return (
-    <header className="header">
-      <img src={Vector_logo} alt="Изображение логотипа в шапке" className="header__logo"/>
-      <nav className='header__nav'>
-        <Switch>
-          <Route path='/sign-up'>
-            <Link className='header__link' to='/sign-in'>Войти</Link>
-          </Route>
-          <Route path='/sign-in'>
-            <Link className='header__link' to='/sign-up'>Регистрация</Link>
-          </Route>
-          <Route path='*'>
-            <h2 className='header__text'>{props.data && props.data.email}</h2>
-            <Link className='header__link' to='' onClick={() => logOut()} >Выйти</Link>
-          </Route>
-        </Switch>
-      </nav>
-    </header>
-  );
+function Header({ userEmailOnHeader, logoutProfile }) {
+    const location = useLocation();
+    return (
+        <header className="header">
+            <a href="#" target="_blank">
+                <img className="logo" src={logoHeader} alt="логотип" />
+            </a>
+            <div className="header__links">
+                <p className="header__link header__link_email">
+                    {location.pathname === "/" ? userEmailOnHeader : ""}
+                </p>
+                <Link
+                    to={
+                        location.pathname === "/signup"
+                            ? "/signin"
+                            : location.pathname === "/signin"
+                                ? "/signup"
+                                : "/signin"
+                    }
+                    className="header__link header__link_exit"
+                    onClick={location.pathname === "/" ? logoutProfile : () => {}}
+                >
+                    {location.pathname === "/signup"
+                        ? "Войти"
+                        : location.pathname === "/signin"
+                            ? "Регистрация"
+                            : "Выйти"}
+                </Link>
+            </div>
+        </header>
+    );
 }
 
 export default Header;

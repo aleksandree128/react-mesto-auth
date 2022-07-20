@@ -1,10 +1,7 @@
-.header__link{
-  font-size: 18px;
-  line-height: 22px;
-  font-weight: 400;
-  color: white;
-  text-decoration: none;
-  margin-left: 24px;
+.header__link {
+    color: white;
+    max-height: 25px;
+    margin-top: 10px;
+    text-decoration: none;
+    font-size: 18px;
 }
-
-

@@ -1,5 +1,5 @@
-@media screen and (max-width: 920px) {
-  .content {
-    width: 320px;
-  }
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
 }
